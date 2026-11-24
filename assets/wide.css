@@ -1,0 +1,79 @@
+/* Page-specific width override for coffee_user_simulation (user requests 2026-11-17: a wider page, twice). The shared style.css
+   stays untouched; the main column grows from the shared 42rem to 58rem, the margin column keeps its width. */
+:root { --measure: 62rem; }                                       /* 58 → 62rem on 2026-11-19 (user: wider again) */
+/* Larger type everywhere (user request 2026-11-19): the root size goes from the browser's 16 px to 18 px, so every rem-based size
+   in the shared stylesheet, the player and this file scales by 12.5 % (body text 17 → 19 px) and the columns widen with it. */
+html { font-size: 112.5%; }
+/* Pipeline figures smaller (user request 2026-11-17): the inlined SVGs stay near their drawn size, centred in the main column. */
+details.figure .fig svg { max-width: 700px; margin: 0 auto; }   /* 600 → 700 on 2026-11-18 (user: a little bigger) */
+/* The recipe list under Settings. */
+.recipe { columns: 2; column-gap: 2.5rem; font-size: 0.95rem; line-height: 1.5; margin: 0.5rem 0; }
+.recipe section { break-inside: avoid; margin: 0 0 0.8rem; }
+.recipe h4 { margin: 0 0 0.15rem; font-size: 0.95rem; font-weight: 600; color: var(--ink, #1f1d1b); }
+.recipe h4 .goal { font-weight: 400; color: var(--accent, #4b2e83); margin-left: 0.4rem; }
+.recipe ol { margin: 0 0 0 1.5rem; padding: 0; color: var(--ink-2, #5f5b55); }
+@media (max-width: 40rem) { .recipe { columns: 1; } }
+/* The action space (user request 2026-11-18): one entry per action, the clip on the left, the sentence forms and the meaning on the right. */
+.actions { list-style: none; margin: 0.8rem 0 1rem; padding: 0; }
+.actions .action { display: grid; grid-template-columns: 19rem minmax(0, 1fr); column-gap: 1.5rem; padding: 0.9rem 0; border-top: 1px solid var(--rule, #dad7d0); }
+.actions .action:last-child { border-bottom: 1px solid var(--rule, #dad7d0); }
+.actions figure.fig { margin: 0; }
+.actions figure.fig video { width: 100%; aspect-ratio: 16 / 9; background: #000; display: block; }
+.actions figure.fig figcaption { font-size: 0.85rem; margin-top: 0.4rem; }
+.actions h4 { margin: 0 0 0.3rem; font-size: 1.05rem; font-weight: 600; }
+.actions .forms { list-style: none; margin: 0 0 0.45rem; padding: 0; font-size: 0.95rem; line-height: 1.45; }
+.actions .forms li::before { content: "\201C"; }
+.actions .forms li::after { content: "\201D"; }
+.actions .slot { margin: 0 0 0.2rem; font-size: 0.875rem; color: var(--ink-2, #5f5b55); line-height: 1.45; }
+.actions .slot b { color: var(--ink, #1f1d1b); font-weight: 600; }
+.actions .means { margin: 0.45rem 0 0; font-size: 0.9rem; line-height: 1.45; }
+@media (max-width: 48rem) { .actions .action { grid-template-columns: 1fr; row-gap: 0.6rem; } .actions .action .action-text { order: -1; } }
+/* The annotated transcript under the simulator (user request 2026-11-19): tick · who · line · our note, grouped into scenes. */
+.takeaways { margin: 0.4rem 0 1.2rem 1.2rem; padding: 0; line-height: 1.5; }
+.takeaways li { margin: 0 0 0.45rem; }
+.transcript { margin: 0.6rem 0 1.5rem; font-size: 0.95rem; line-height: 1.45; }
+.transcript .scene { margin: 1.3rem 0 0; }
+.transcript .scene > h4 { margin: 0 0 0.3rem; font-size: 1rem; font-weight: 600; }
+.transcript .scene > h4 .n { font-weight: 400; color: var(--ink-2, #5f5b55); margin-left: 0.4rem; }
+.transcript .scene > .gist { margin: 0 0 0.6rem; color: var(--ink-2, #5f5b55); }
+.transcript .row { display: grid; grid-template-columns: 2.6rem 5.4rem minmax(0, 1fr) 18rem; column-gap: 0.9rem; padding: 0.28rem 0.3rem; border-top: 1px solid var(--rule, #dad7d0); }
+.transcript .row.head { border-top: 0; color: var(--ink-3, #8b867e); font-size: 0.82rem; }
+.transcript .scene .row:last-child { border-bottom: 1px solid var(--rule, #dad7d0); }
+.transcript .row.now { background: var(--accent-soft, #ece7f4); }
+.transcript .row .t { color: var(--ink-3, #8b867e); font-variant-numeric: tabular-nums; }
+.transcript .row .t a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--ink-3, #8b867e); }
+.transcript .row .t a:hover { color: var(--accent, #4b2e83); }
+.transcript .row .who { font-weight: 600; }
+.transcript .row.assistant .who { color: var(--accent, #4b2e83); }
+.transcript .row.user .who { color: #8a6d1f; }
+.transcript .row.does, .transcript .row.forced, .transcript .row.event { color: var(--ink-3, #8b867e); font-style: italic; }
+.transcript .row.does .who, .transcript .row.forced .who, .transcript .row.event .who { font-weight: 500; font-style: normal; }
+.transcript .row.forced, .transcript .row.event { color: var(--ink-2, #5f5b55); }
+.transcript .row .silent { color: var(--ink-3, #8b867e); font-style: italic; }
+.transcript .row .span { font-style: normal; }
+.transcript .row .tag { display: inline-block; margin-left: 0.35rem; font-size: 0.76rem; font-style: normal; color: var(--ink-2, #5f5b55); border: 1px solid var(--rule, #dad7d0); border-radius: 3px; padding: 0 0.3rem; vertical-align: 1px; white-space: nowrap; }
+.transcript .row .tag.flag { border-color: var(--accent, #4b2e83); color: var(--accent, #4b2e83); }
+.transcript .row .tag.wrong { border-color: var(--fail, #9a3b2e); color: var(--fail, #9a3b2e); }
+.transcript .row .remark { font-size: 0.875rem; color: var(--ink-2, #5f5b55); font-style: normal; }
+.transcript .row .remark strong { color: var(--ink, #1f1d1b); }
+@media (max-width: 52rem) {
+  .transcript .row { grid-template-columns: 2.4rem 4.8rem minmax(0, 1fr); row-gap: 0.15rem; }
+  .transcript .row .remark { grid-column: 2 / -1; border-left: 2px solid var(--rule, #dad7d0); padding-left: 0.6rem; margin-top: 0.2rem; }
+  .transcript .row .remark:empty { display: none; }
+}
+/* software_use_simulation additions (2026-11-23): the window figure, grouped action lists, the task blocks. */
+.window-fig img { width: 100%; height: auto; display: block; border: 1px solid var(--rule, #dad7d0); }
+.actions .noclip { aspect-ratio: 16 / 9; background: var(--field, #f3f2ee); color: var(--ink-3, #8b867e); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+details.expand h4.group { margin: 1.4rem 0 0.2rem; font-size: 1.1rem; font-weight: 600; color: var(--accent, #4b2e83); }
+.task { margin: 1.6rem 0 0; padding-top: 0.6rem; border-top: 1px solid var(--rule, #dad7d0); }
+.task h3 { margin: 0 0 0.3rem; }
+.task .goal { color: var(--ink-2, #5f5b55); margin: 0 0 0.8rem; }
+.task .cols { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 2rem; }
+.task h4 { margin: 0.6rem 0 0.3rem; font-size: 1rem; font-weight: 600; }
+.task ol.steps { margin: 0 0 0 1.4rem; padding: 0; font-size: 0.95rem; line-height: 1.5; }
+.task ol.steps .prov { color: var(--ink-3, #8b867e); font-size: 0.85rem; }
+.task ol.steps .when { color: var(--ink-3, #8b867e); font-size: 0.85rem; margin-left: 0.3rem; }
+.task ol.steps .when.bad { color: var(--fail, #9a3b2e); }
+.task table.results tr.bad td { color: var(--fail, #9a3b2e); }
+table.results.mistakes td { font-size: 0.9rem; vertical-align: top; }
+@media (max-width: 52rem) { .task .cols { grid-template-columns: 1fr; } }
